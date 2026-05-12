@@ -1,5 +1,11 @@
 # SwiftUI MV Skill
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Platform](https://img.shields.io/badge/Platform-iOS%20|%20macOS-000000.svg?logo=apple)](https://developer.apple.com/swift/)
+[![Swift](https://img.shields.io/badge/Swift-5.10+-F05138.svg?logo=swift&logoColor=white)](https://swift.org)
+[![Codex](https://img.shields.io/badge/Codex-Skill-111111.svg)](https://openai.com/codex/)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-Skill-blueviolet.svg)](https://claude.ai/code)
+
 SwiftUI MV Skill is an agent skill for building, refactoring, and reviewing
 SwiftUI apps with a clean `MV + Services + DataStore + DesignSystem`
 architecture.
