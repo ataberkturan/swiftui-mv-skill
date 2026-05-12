@@ -256,3 +256,9 @@ styling, animation, or platform API coverage.
 ## License
 
 MIT. Created by Ataberk Turan.
+
+## References
+
+- Thomas Ricouard, ["Removing the M from MVVM with SwiftUI"](https://blog.stackademic.com/removing-the-m-from-mvvm-with-swiftui-a58b239e9e3e),
+  Stackademic, Apr 8, 2024. This article inspired parts of the service-oriented
+  guidance behind this skill.
