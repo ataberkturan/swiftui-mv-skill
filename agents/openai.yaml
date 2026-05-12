@@ -1,0 +1,21 @@
+name: swiftui-mv
+version: "0.1.0"
+description: >-
+  SwiftUI MV architecture guidance for views, services, DataStore,
+  DesignSystem, Resources, and Utils.
+author:
+  name: Ataberk Turan
+repository: https://github.com/ataberkturan/swiftui-mv-skill
+license: MIT
+keywords:
+  - swift
+  - swiftui
+  - ios
+  - macos
+  - architecture
+  - mv
+  - services
+  - datastore
+  - observation
+skills:
+  - swiftui-mv

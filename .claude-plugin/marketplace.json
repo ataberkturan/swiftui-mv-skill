@@ -1,0 +1,43 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/refs/heads/main/marketplace/marketplace.schema.json",
+  "name": "swiftui-mv-skill",
+  "version": "0.1.0",
+  "owner": {
+    "name": "Ataberk Turan"
+  },
+  "description": "SwiftUI MV architecture guidance for AI coding agents.",
+  "plugins": [
+    {
+      "name": "swiftui-mv",
+      "source": "./",
+      "description": "SwiftUI MV architecture guidance for views, services, DataStore, DesignSystem, Resources, and Utils.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Ataberk Turan"
+      },
+      "repository": "https://github.com/ataberkturan/swiftui-mv-skill",
+      "license": "MIT",
+      "category": "development",
+      "keywords": [
+        "swift",
+        "swiftui",
+        "ios",
+        "macos",
+        "architecture",
+        "mv",
+        "services",
+        "datastore",
+        "observation"
+      ],
+      "tags": [
+        "swift",
+        "swiftui",
+        "ios",
+        "macos",
+        "architecture",
+        "mv",
+        "observation"
+      ]
+    }
+  ]
+}

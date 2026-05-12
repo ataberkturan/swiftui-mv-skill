@@ -1,0 +1,42 @@
+{
+  "name": "swiftui-mv",
+  "version": "0.1.0",
+  "description": "SwiftUI MV architecture guidance for views, services, DataStore, DesignSystem, Resources, and Utils.",
+  "author": {
+    "name": "Ataberk Turan",
+    "url": "https://github.com/ataberkturan"
+  },
+  "homepage": "https://github.com/ataberkturan/swiftui-mv-skill",
+  "repository": "https://github.com/ataberkturan/swiftui-mv-skill",
+  "license": "MIT",
+  "keywords": [
+    "swift",
+    "swiftui",
+    "ios",
+    "macos",
+    "architecture",
+    "mv",
+    "services",
+    "datastore",
+    "observation"
+  ],
+  "skills": "./swiftui-mv",
+  "interface": {
+    "displayName": "SwiftUI MV",
+    "shortDescription": "SwiftUI MV architecture guidance",
+    "longDescription": "Build, refactor, and review SwiftUI apps using MV + Services + DataStore + DesignSystem architecture without introducing ViewModels by default.",
+    "developerName": "Ataberk Turan",
+    "category": "Development",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/ataberkturan/swiftui-mv-skill",
+    "defaultPrompt": [
+      "Use SwiftUI MV to review this app architecture.",
+      "Refactor this SwiftUI feature into MV + Services.",
+      "Audit this SwiftUI project structure."
+    ],
+    "brandColor": "#F05138"
+  }
+}

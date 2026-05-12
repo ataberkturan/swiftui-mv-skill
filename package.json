@@ -1,0 +1,10 @@
+{
+  "keywords": [
+    "pi-package"
+  ],
+  "pi": {
+    "skills": [
+      "./swiftui-mv"
+    ]
+  }
+}
