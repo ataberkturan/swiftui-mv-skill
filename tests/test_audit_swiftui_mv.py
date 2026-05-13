@@ -102,17 +102,37 @@ class AuditSwiftUIMVTests(unittest.TestCase):
 
             self.assertIn("missing-main-view-file", self.codes(root))
 
-    def test_standalone_struct_view_inside_components_file(self):
+    def test_nested_struct_view_inside_parent_extension_is_allowed(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             root = self.make_root(tmpdir)
             self.write(root, "Views/HomeView/HomeView.swift")
             self.write(
                 root,
-                "Views/HomeView/Extensions/HomeView+Components.swift",
-                'import SwiftUI\nstruct HeaderSection: View { var body: some View { Text("Header") } }\n',
+                "Views/HomeView/Extensions/HomeView+PromptDockView.swift",
+                (
+                    "import SwiftUI\n"
+                    "extension HomeView {\n"
+                    "    private struct PromptDockView: View {\n"
+                    "        @Binding var prompt: String\n"
+                    "        var body: some View { TextField(\"Prompt\", text: $prompt) }\n"
+                    "    }\n"
+                    "}\n"
+                ),
             )
 
-            self.assertIn("struct-view-in-components-extension", self.codes(root))
+            self.assertNotIn("top-level-view-struct-in-extension", self.codes(root))
+
+    def test_top_level_struct_view_inside_extension_file(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = self.make_root(tmpdir)
+            self.write(root, "Views/HomeView/HomeView.swift")
+            self.write(
+                root,
+                "Views/HomeView/Extensions/HomeView+PromptDockView.swift",
+                'import SwiftUI\nstruct PromptDockView: View { var body: some View { Text("Prompt") } }\n',
+            )
+
+            self.assertIn("top-level-view-struct-in-extension", self.codes(root))
 
     def test_view_specific_state_in_root_enums(self):
         with tempfile.TemporaryDirectory() as tmpdir:

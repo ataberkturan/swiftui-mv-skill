@@ -10,6 +10,7 @@ Project
 │   │   ├── HomeState.swift
 │   │   └── Extensions
 │   │       ├── HomeView+Components.swift
+│   │       ├── HomeView+PromptDockView.swift
 │   │       └── HomeView+Extensions.swift
 │   └── LoginView
 │       ├── LoginView.swift
@@ -88,14 +89,14 @@ This is an example. Do not create unused folders just for the sake of structure.
 
 ```swift
 extension HomeView {
-    var headerSection: some View {
+    private var headerSection: some View {
         VStack(alignment: .leading) {
             Text("Wallpaper")
             Text("Create a new image")
         }
     }
 
-    func modeButton(title: String, isSelected: Bool) -> some View {
+    private func modeButton(title: String, isSelected: Bool) -> some View {
         Button(title) {
             selectedMode = title
         }
@@ -104,17 +105,51 @@ extension HomeView {
 }
 ```
 
-## Wrong Local Component
+Use computed properties for tiny parameterless fragments and helper functions for small parameterized fragments.
+
+## Correct View-Specific Nested Component
+
+Place larger screen-specific components directly under the view's `Extensions` folder:
+
+```text
+Views/HomeView/Extensions/HomeView+PromptDockView.swift
+```
 
 ```swift
-struct HeaderSection: View {
-    var body: some View {
-        Text("Wallpaper")
+extension HomeView {
+    private struct PromptDockView: View {
+        @Binding var prompt: String
+        let isGenerating: Bool
+        let onGenerate: () -> Void
+
+        @State private var isExpanded = false
+
+        var body: some View {
+            VStack(spacing: 12) {
+                TextField("Describe a wallpaper", text: $prompt)
+
+                Button("Generate", action: onGenerate)
+                    .disabled(isGenerating)
+            }
+            .scaleEffect(isExpanded ? 1.0 : 0.98)
+        }
     }
 }
 ```
 
-Do not place standalone `struct View` declarations inside `ViewName+Components.swift`.
+Use this pattern when the UI is too large for a computed property but still belongs only to one parent view.
+
+## Wrong Local Component
+
+```swift
+struct PromptDockView: View {
+    var body: some View {
+        Text("Prompt")
+    }
+}
+```
+
+Do not place top-level screen-specific `struct View` declarations inside a view's `Extensions` files. Scope them inside `extension ViewName`, or move generic/reusable UI to `DesignSystem`.
 
 ## Correct Service Consumption
 

@@ -44,9 +44,9 @@ description: Build, refactor, or review SwiftUI apps using a native-first MV arc
 
 ## Refactor Rules
 
-- Move screen-specific UI fragments into `ViewName+Components.swift` as extensions on the parent view.
-- Use `var some View` for parameterless local fragments and `func ... -> some View` for local fragments with parameters.
-- Do not create standalone `struct View` components inside `ViewName+Components.swift`.
+- Move small screen-specific UI fragments into `ViewName+Components.swift` as extensions on the parent view.
+- Use `private var ...: some View` for tiny parameterless local fragments and `private func ... -> some View` for small parameterized fragments.
+- Use private nested `View` structs inside `extension ViewName` for larger screen-specific sections with inputs, bindings, local UI state, complex animations, or meaningful identity; place them in files like `ViewName+ComponentName.swift` under the view's `Extensions` folder.
 - Move reusable, standalone, UI-focused components to `DesignSystem`, initialized with explicit inputs instead of reading services or app state directly.
 - Move networking, persistence, authentication, subscriptions, remote config, storage, notifications, payments, and domain actions to `Services`.
 - Keep DataStore small and app-level. It may coordinate services or smaller stores, but it should not directly implement networking, database, Keychain, image generation, secret handling, or screen-specific UI logic.

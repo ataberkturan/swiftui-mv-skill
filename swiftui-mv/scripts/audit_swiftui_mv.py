@@ -107,6 +107,52 @@ def add(findings: list[Finding], strict: bool, code: str, path: Path, root: Path
     )
 
 
+def matching_brace_index(text: str, open_index: int) -> int | None:
+    depth = 0
+    for index in range(open_index, len(text)):
+        char = text[index]
+        if char == "{":
+            depth += 1
+        elif char == "}":
+            depth -= 1
+            if depth == 0:
+                return index
+    return None
+
+
+def text_without_parent_view_extensions(text: str, view_name: str) -> str:
+    extension_re = re.compile(rf"\bextension\s+{re.escape(view_name)}\b[^{{]*{{")
+    chars = list(text)
+
+    for match in extension_re.finditer(text):
+        open_index = text.find("{", match.start(), match.end())
+        if open_index == -1:
+            continue
+        close_index = matching_brace_index(text, open_index)
+        if close_index is None:
+            continue
+        for index in range(match.start(), close_index + 1):
+            chars[index] = " "
+
+    return "".join(chars)
+
+
+def screen_extension_files(root: Path) -> list[tuple[Path, str]]:
+    views = root / "Views"
+    if not views.exists():
+        return []
+
+    files: list[tuple[Path, str]] = []
+    for swift_file in swift_files(views):
+        try:
+            parts = swift_file.relative_to(views).parts
+        except ValueError:
+            continue
+        if len(parts) >= 3 and parts[1] == "Extensions":
+            files.append((swift_file, parts[0]))
+    return files
+
+
 def root_folder_findings(root: Path, strict: bool) -> list[Finding]:
     findings: list[Finding] = []
     existing = {child.name for child in root.iterdir() if child.is_dir()}
@@ -189,16 +235,16 @@ def view_folder_findings(root: Path, strict: bool) -> list[Finding]:
                 f"View folder '{child.name}' should contain '{child.name}.swift'.",
             )
 
-    for components_file in sorted(path for path in views.rglob("*+Components.swift") if not is_ignored_path(path)):
-        text = read_text(components_file)
+    for extension_file, view_name in screen_extension_files(root):
+        text = text_without_parent_view_extensions(read_text(extension_file), view_name)
         if STRUCT_VIEW_RE.search(text):
             add(
                 findings,
                 strict,
-                "struct-view-in-components-extension",
-                components_file,
+                "top-level-view-struct-in-extension",
+                extension_file,
                 root,
-                "ViewName+Components.swift should extend the parent view, not define standalone struct View components.",
+                "Screen-specific View structs in Extensions should be nested inside extension ViewName; move generic or reusable UI to DesignSystem.",
             )
 
     return findings
